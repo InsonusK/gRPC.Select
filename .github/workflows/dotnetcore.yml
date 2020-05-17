@@ -20,9 +20,7 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Define where am I
-      run: |
-        echo $pwd
-        ls      
+      run: set      
     - name: Install dependencies
       run: dotnet restore
     - name: Build
