@@ -21,7 +21,7 @@ jobs:
         dotnet-version: 3.1.101
     - name: Define where am I
       run: |
-        pwd
+        echo $pwd
         ls      
     - name: Install dependencies
       run: dotnet restore
