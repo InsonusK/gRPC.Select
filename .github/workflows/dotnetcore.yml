@@ -20,7 +20,7 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Define where am I
-      run: set      
+      run: echo 'test echo'     
     - name: Install dependencies
       run: dotnet restore
     - name: Build
