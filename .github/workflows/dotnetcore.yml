@@ -9,21 +9,34 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     defaults:
       run:
         shell: bash
-        working-directory: gRPCSelect
+        working-directory: gRPC.Select/gRPC.Select.Test
+
+    services:
+      postgressrv:
+        image: postgres
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-    - name: Define where am I
-      run: echo 'test echo'     
+
     - name: Install dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test --no-restore --verbosity m
+      env:
+        TestENV_ConnectionStrings__DefaultConnection: "Host=localhost;Port=5432;Database=GitHubActions;Username=postgres;Password=postgres"

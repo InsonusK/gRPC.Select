@@ -13,7 +13,10 @@ namespace gRPC.Select.Test.TestTools
     {
         public DBInit(string testName)
         {
-            Configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            Configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", true)
+                .AddEnvironmentVariables("TestENV_")
+                .Build();
             DbContextOptions = CreateDbOptions(testName);
         }
 
@@ -27,13 +30,6 @@ namespace gRPC.Select.Test.TestTools
             NpgsqlConnectionStringBuilder _stringBuilder = new NpgsqlConnectionStringBuilder(_connectionString);
             _stringBuilder.Database = _stringBuilder.Database + "_" + testName;
 
-            var _ping = new Ping();
-            var _reply = _ping.Send(_stringBuilder.Host, 5 * 1000);
-            if (_reply.Status != IPStatus.Success)
-            {
-                throw new Exception("PGSQL Not Avaliable");
-            }
-
             return new DbContextOptionsBuilder<DBContext>()
                 .UseNpgsql(_stringBuilder.ToString()).Options;
         }
@@ -41,7 +37,7 @@ namespace gRPC.Select.Test.TestTools
         public void InitDB()
         {
             using DBContext _context = new DBContext(DbContextOptions);
-            _context.Database.EnsureDeleted();
+            // _context.Database.EnsureDeleted();
             _context.Database.Migrate();
             AddValues();
         }
