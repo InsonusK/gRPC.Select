@@ -1,0 +1,13 @@
+name: .NET Core
+
+on:
+  push:
+    branches: [ ActionConfiguration ]
+
+jobs:
+  somework:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: message
+      run: echo "No need to do"
