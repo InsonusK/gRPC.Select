@@ -3,6 +3,15 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <LangVersion>8</LangVersion>
+        <PackageId>InsonusK.gRPC.Select</PackageId>
+        <Title>gRPC select query tool</Title>
+        <Authors>InsonusK</Authors>
+        <Description>Library that help you create gRPC services look like select query. Like OData services. </Description>
+        <PackageProjectUrl>https://github.com/InsonusK/gRPC.Select</PackageProjectUrl>
+        <PackageLicenseUrl>Apache License 2.0</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/InsonusK/gRPC.Select</RepositoryUrl>
+        <PackageTags>gRPC, Query, OData</PackageTags>
+        <PackageVersion>1.1.1</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
