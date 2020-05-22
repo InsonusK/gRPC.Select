@@ -3,7 +3,7 @@ using gRPC.Select.Interface;
 using gRPC.Select.LogicConditions;
 using NUnit.Framework;
 
-namespace gRPC.Select.Test.LogicConditions
+namespace gRPC.Select.Test.Tests.LogicConditions
 {
     [TestFixture]
     public class LogicConditionStrategy_Test

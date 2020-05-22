@@ -4,7 +4,7 @@ using gRPC.Select.CompareConditions;
 using gRPC.Select.Interface;
 using NUnit.Framework;
 
-namespace gRPC.Select.Test.CompareConditions
+namespace gRPC.Select.Test.Tests.CompareConditions
 {
     [TestFixture]
     public class MathConditionGe_Test

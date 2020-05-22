@@ -1,4 +1,4 @@
-namespace gRPC.Select.Test.CompareConditions
+namespace gRPC.Select.Test.Tests.CompareConditions
 {
     public class CompareCondition_TestCases
     {

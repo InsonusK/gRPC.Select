@@ -4,22 +4,21 @@ using gRPC.Select.CompareConditions;
 using gRPC.Select.Interface;
 using NUnit.Framework;
 
-namespace gRPC.Select.Test.CompareConditions
+namespace gRPC.Select.Test.Tests.CompareConditions
 {
     [TestFixture]
-    public class MathConditionNe_Test
+    public class MathConditionLt_Test
     {
         private ICompareCondition _compareCondition;
 
         [SetUp]
         public void SetUp()
         {
-            _compareCondition = new CompareConditionNe();
+            _compareCondition = new CompareConditionLt();
         }
 
         [Test]
-        [TestCaseSource(typeof(CompareCondition_TestCases), nameof(CompareCondition_TestCases.NotEqualComparable))]
-        [TestCaseSource(typeof(CompareCondition_TestCases), nameof(CompareCondition_TestCases.NotEqualNotComparable))]
+        [TestCaseSource(typeof(CompareCondition_TestCases), nameof(CompareCondition_TestCases.LeftLesser))]
         public void True(Type type, object leftValue, object rightValue)
         {
             // Array
@@ -38,7 +37,7 @@ namespace gRPC.Select.Test.CompareConditions
 
         [Test]
         [TestCaseSource(typeof(CompareCondition_TestCases), nameof(CompareCondition_TestCases.EqualComparable))]
-        [TestCaseSource(typeof(CompareCondition_TestCases), nameof(CompareCondition_TestCases.EqualNotComparable))]
+        [TestCaseSource(typeof(CompareCondition_TestCases), nameof(CompareCondition_TestCases.LeftGreater))]
         public void False(Type type, object leftValue, object rightValue)
         {
             // Array
@@ -53,6 +52,20 @@ namespace gRPC.Select.Test.CompareConditions
 
             // Assert
             Assert.IsFalse(_lambda.Compile().Invoke());
+        }
+
+        [Test]
+        [TestCaseSource(typeof(CompareCondition_TestCases), nameof(CompareCondition_TestCases.NotComparable))]
+        public void Errors(Type type, object leftValue, object rightValue)
+        {
+            // Array
+            Assert.IsInstanceOf(type, leftValue);
+            Assert.IsInstanceOf(type, rightValue);
+            var _left = Expression.Constant(leftValue);
+            var _right = Expression.Constant(rightValue);
+
+            // Act Assert
+            Assert.Catch<InvalidOperationException>(() => _compareCondition.Build(_left, _right));
         }
     }
 }

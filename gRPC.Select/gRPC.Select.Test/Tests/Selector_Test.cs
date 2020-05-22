@@ -1,11 +1,10 @@
-using gRPC.Select.Interface;
-using NSubstitute;
-using NUnit.Framework;
 using System.Linq;
+using gRPC.Select.Interface;
 using gRPC.Select.Test.TestTools;
 using GRPC.Selector;
+using NUnit.Framework;
 
-namespace gRPC.Select.Test
+namespace gRPC.Select.Test.Tests
 {
     public class Selector_Test
     {

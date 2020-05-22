@@ -4,21 +4,22 @@ using gRPC.Select.CompareConditions;
 using gRPC.Select.Interface;
 using NUnit.Framework;
 
-namespace gRPC.Select.Test.CompareConditions
+namespace gRPC.Select.Test.Tests.CompareConditions
 {
     [TestFixture]
-    public class CompareConditionGt_Test
+    public class MathConditionLe_Test
     {
         private ICompareCondition _compareCondition;
 
         [SetUp]
         public void SetUp()
         {
-            _compareCondition = new CompareConditionGt();
+            _compareCondition = new CompareConditionLe();
         }
 
         [Test]
-        [TestCaseSource(typeof(CompareCondition_TestCases), nameof(CompareCondition_TestCases.LeftGreater))]
+        [TestCaseSource(typeof(CompareCondition_TestCases), nameof(CompareCondition_TestCases.EqualComparable))]
+        [TestCaseSource(typeof(CompareCondition_TestCases), nameof(CompareCondition_TestCases.LeftLesser))]
         public void True(Type type, object leftValue, object rightValue)
         {
             // Array
@@ -36,8 +37,7 @@ namespace gRPC.Select.Test.CompareConditions
         }
 
         [Test]
-        [TestCaseSource(typeof(CompareCondition_TestCases), nameof(CompareCondition_TestCases.EqualComparable))]
-        [TestCaseSource(typeof(CompareCondition_TestCases), nameof(CompareCondition_TestCases.LeftLesser))]
+        [TestCaseSource(typeof(CompareCondition_TestCases), nameof(CompareCondition_TestCases.LeftGreater))]
         public void False(Type type, object leftValue, object rightValue)
         {
             // Array

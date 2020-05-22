@@ -5,10 +5,10 @@ using gRPC.Select.Interface;
 using gRPC.Select.PropertyConverters;
 using NUnit.Framework;
 
-namespace gRPC.Select.Test.PropertyConverters
+namespace gRPC.Select.Test.Tests.PropertyConverters
 {
     [TestFixture]
-    public class ToUpperCase_Test
+    public class ToLowerCase_Test
     {
         class TestClass
         {
@@ -21,7 +21,7 @@ namespace gRPC.Select.Test.PropertyConverters
         [SetUp]
         public void SetUp()
         {
-            _converter = new ToUpperCase();
+            _converter = new ToLowerCase();
         }
 
         [Test]
@@ -37,14 +37,14 @@ namespace gRPC.Select.Test.PropertyConverters
             var _assertedLambda = _lambdaExpression.Compile();
 
             // Assert
-            Assert.AreEqual("AOEUI", _assertedLambda("AOeuI"));
+            Assert.AreEqual("aoeui", _assertedLambda("AOEuI"));
         }
 
         [Test]
         public void ConvertProperty()
         {
             // Array
-            var _testClass = new TestClass() {Value = "AOeuI"};
+            var _testClass = new TestClass() {Value = "AOEuI"};
             var _parameter = Expression.Parameter(typeof(TestClass), "x");
 
             var _property = Expression.Property(_parameter, nameof(_testClass.Value));
@@ -56,7 +56,7 @@ namespace gRPC.Select.Test.PropertyConverters
             var _assertedLambda = _lambdaExpression.Compile();
 
             // Assert
-            Assert.AreEqual("AOEUI", _assertedLambda(_testClass));
+            Assert.AreEqual("aoeui", _assertedLambda(_testClass));
         }
 
         [Test]

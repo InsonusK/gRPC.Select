@@ -1,4 +1,4 @@
-namespace gRPC.Select.Test.LogicConditions
+namespace gRPC.Select.Test.Tests.LogicConditions
 {
     public class LogicCondition_TestCases
     {

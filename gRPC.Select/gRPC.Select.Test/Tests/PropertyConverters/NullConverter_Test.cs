@@ -4,7 +4,7 @@ using gRPC.Select.Interface;
 using gRPC.Select.PropertyConverters;
 using NUnit.Framework;
 
-namespace gRPC.Select.Test.PropertyConverters
+namespace gRPC.Select.Test.Tests.PropertyConverters
 {
     [TestFixture]
     public class NullConverter_Test
