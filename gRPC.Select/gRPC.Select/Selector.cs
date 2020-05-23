@@ -54,17 +54,17 @@ namespace gRPC.Select
             var _queryableData = selectRequest.RootSelectConditionCase switch
             {
                 SelectRequest.RootSelectConditionOneofCase.None => queryableData,
-                SelectRequest.RootSelectConditionOneofCase.SelectCondition => Apply(queryableData,
-                    selectRequest.SelectCondition),
-                SelectRequest.RootSelectConditionOneofCase.SelectConditionPack => Apply(queryableData,
-                    selectRequest.SelectConditionPack),
+                SelectRequest.RootSelectConditionOneofCase.WhereSimple => Apply(queryableData,
+                    selectRequest.WhereSimple),
+                SelectRequest.RootSelectConditionOneofCase.Where => Apply(queryableData,
+                    selectRequest.Where),
                 _ => throw new ArgumentOutOfRangeException(nameof(selectRequest.RootSelectConditionCase),
                     selectRequest.RootSelectConditionCase, "Unexpected value")
             };
 
-            if (selectRequest.SelectLines.NotNullOrEmpty())
+            if (selectRequest.Lines.NotNullOrEmpty())
             {
-               _queryableData = FilterRowsByIndex(_queryableData, selectRequest.SelectLines);
+               _queryableData = FilterRowsByIndex(_queryableData, selectRequest.Lines);
             }
 
             return _queryableData;

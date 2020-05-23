@@ -31,7 +31,7 @@ namespace gRPC.Select.Test.Tests.Selector
             ISelector _selector = new Select.Selector();
             var _selectRequest = new SelectRequest()
             {
-                SelectCondition = new SelectCondition()
+                WhereSimple = new SelectCondition()
                     {Condition = CompareCondition.Eq, Value = "2", PropertyName = nameof(DataModel.Id)}
             };
             var _expectedResult = _context.Table.Single(t => t.Id == 2);
@@ -52,7 +52,7 @@ namespace gRPC.Select.Test.Tests.Selector
             ISelector _selector = new Select.Selector();
             var _selectRequest = new SelectRequest()
             {
-                SelectConditionPack = new SelectConditionPack()
+                Where= new SelectConditionPack()
                 {
                     SelectConditions =
                     {
@@ -103,7 +103,7 @@ namespace gRPC.Select.Test.Tests.Selector
             };
             var _selectRequest = new SelectRequest()
             {
-                SelectConditionPack = new SelectConditionPack()
+                Where = new SelectConditionPack()
                 {
                     SelectConditions =
                     {
@@ -133,7 +133,7 @@ namespace gRPC.Select.Test.Tests.Selector
             ISelector _selector = new Select.Selector();
             var _selectRequest = new SelectRequest()
             {
-                SelectConditionPack = new SelectConditionPack()
+                Where = new SelectConditionPack()
                 {
                     SelectConditions =
                     {
@@ -163,7 +163,7 @@ namespace gRPC.Select.Test.Tests.Selector
             ISelector _selector = new Select.Selector();
             var _selectRequest = new SelectRequest()
             {
-                SelectCondition = new SelectCondition()
+                WhereSimple = new SelectCondition()
                     {Condition = CompareCondition.Eq, Value = "aoeui", PropertyName = nameof(DataModel.StringValue),Converter = Converter.ToLower}
             };
             var _expectedResult = _context.Table.Single(t => t.StringValue.ToLower() == "aoeui");

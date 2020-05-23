@@ -43,8 +43,8 @@ message SelectLines {
 
 message SelectRequest {
     oneof root_select_condition {
-        SelectCondition select_condition = 1;
-        SelectConditionPack select_condition_pack = 2;
+        SelectCondition where_simple = 1;
+        SelectConditionPack where = 2;
     }
-    SelectLines select_lines = 3;
+    SelectLines lines = 3;
 }
