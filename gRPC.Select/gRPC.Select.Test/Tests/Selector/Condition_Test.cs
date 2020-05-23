@@ -4,7 +4,7 @@ using gRPC.Select.Test.TestTools;
 using GRPC.Selector;
 using NUnit.Framework;
 
-namespace gRPC.Select.Test.Tests
+namespace gRPC.Select.Test.Tests.Selector
 {
     public class Selector_Test
     {
@@ -28,7 +28,7 @@ namespace gRPC.Select.Test.Tests
         {
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
-            ISelector _selector = new Selector();
+            ISelector _selector = new Select.Selector();
             var _selectRequest = new SelectRequest()
             {
                 SelectCondition = new SelectCondition()
@@ -49,7 +49,7 @@ namespace gRPC.Select.Test.Tests
         {
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
-            ISelector _selector = new Selector();
+            ISelector _selector = new Select.Selector();
             var _selectRequest = new SelectRequest()
             {
                 SelectConditionPack = new SelectConditionPack()
@@ -78,7 +78,7 @@ namespace gRPC.Select.Test.Tests
         {
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
-            ISelector _selector = new Selector();
+            ISelector _selector = new Select.Selector();
             var _filterByString = new SelectConditionPack()
             {
                 SelectConditions =
@@ -130,7 +130,7 @@ namespace gRPC.Select.Test.Tests
         {
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
-            ISelector _selector = new Selector();
+            ISelector _selector = new Select.Selector();
             var _selectRequest = new SelectRequest()
             {
                 SelectConditionPack = new SelectConditionPack()
@@ -160,7 +160,7 @@ namespace gRPC.Select.Test.Tests
         {
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
-            ISelector _selector = new Selector();
+            ISelector _selector = new Select.Selector();
             var _selectRequest = new SelectRequest()
             {
                 SelectCondition = new SelectCondition()
@@ -181,7 +181,7 @@ namespace gRPC.Select.Test.Tests
         {
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
-            ISelector _selector = new Selector();
+            ISelector _selector = new Select.Selector();
             var _selectRequest = new SelectRequest();
 
             var _expectedResult = _context.Table.ToArray();
@@ -190,11 +190,7 @@ namespace gRPC.Select.Test.Tests
             var _assertedResult = _selector.Apply(_context.Table.AsQueryable(), _selectRequest).ToArray();
 
             // Assert
-            Assert.AreEqual(_expectedResult.Length, _assertedResult.Count());
-            foreach (var _dataModel in _expectedResult)
-            {
-                 Assert.IsTrue(_assertedResult.Contains(_dataModel));
-            }
+            Assert.IsTrue(DataModel.CompareArr(_expectedResult, _assertedResult));
         }
     }
 }
