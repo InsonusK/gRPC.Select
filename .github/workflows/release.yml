@@ -1,4 +1,4 @@
-name: master branch push
+name: release wolkflow
 
 on:
   release:
