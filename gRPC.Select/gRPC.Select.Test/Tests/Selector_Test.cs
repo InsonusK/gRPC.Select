@@ -177,21 +177,24 @@ namespace gRPC.Select.Test.Tests
         }
 
         [Test]
-        public void Empty_SelectConditior()
+        public void Empty_SelectCondition()
         {
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
             ISelector _selector = new Selector();
             var _selectRequest = new SelectRequest();
 
-            var _expectedResult = _context.Table.Single(t => t.StringValue.ToLower() == "aoeui");
+            var _expectedResult = _context.Table.ToArray();
 
             // Act
             var _assertedResult = _selector.Apply(_context.Table.AsQueryable(), _selectRequest).ToArray();
 
             // Assert
-            Assert.AreEqual(1, _assertedResult.Count());
-            Assert.AreEqual(_expectedResult, _assertedResult[0]);
+            Assert.AreEqual(_expectedResult.Length, _assertedResult.Count());
+            foreach (var _dataModel in _expectedResult)
+            {
+                 Assert.IsTrue(_assertedResult.Contains(_dataModel));
+            }
         }
     }
 }
