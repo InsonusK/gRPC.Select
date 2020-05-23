@@ -29,7 +29,7 @@ namespace gRPC.Select.Test.Tests
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
             ISelector _selector = new Selector();
-            var _selectReqest = new SelectRequest()
+            var _selectRequest = new SelectRequest()
             {
                 SelectCondition = new SelectCondition()
                     {Condition = CompareCondition.Eq, Value = "2", PropertyName = nameof(DataModel.Id)}
@@ -37,7 +37,7 @@ namespace gRPC.Select.Test.Tests
             var _expectedResult = _context.Table.Single(t => t.Id == 2);
 
             // Act
-            var _assertedResult = _selector.Apply(_context.Table.AsQueryable(), _selectReqest).ToArray();
+            var _assertedResult = _selector.Apply(_context.Table.AsQueryable(), _selectRequest).ToArray();
 
             // Assert
             Assert.AreEqual(1, _assertedResult.Count());
@@ -50,7 +50,7 @@ namespace gRPC.Select.Test.Tests
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
             ISelector _selector = new Selector();
-            var _selectReqest = new SelectRequest()
+            var _selectRequest = new SelectRequest()
             {
                 SelectConditionPack = new SelectConditionPack()
                 {
@@ -67,7 +67,7 @@ namespace gRPC.Select.Test.Tests
             var _expectedResult = _context.Table.Where(t => t.Id == 2 || t.Id == 3).ToArray();
 
             // Act
-            var _assertedResult = _selector.Apply(_context.Table.AsQueryable(), _selectReqest).ToArray();
+            var _assertedResult = _selector.Apply(_context.Table.AsQueryable(), _selectRequest).ToArray();
 
             // Assert
             Assert.IsTrue(DataModel.CompareArr(_expectedResult, _assertedResult));
@@ -101,7 +101,7 @@ namespace gRPC.Select.Test.Tests
                 },
                 JoinCondition = LogicCondition.Or
             };
-            var _selectReqest = new SelectRequest()
+            var _selectRequest = new SelectRequest()
             {
                 SelectConditionPack = new SelectConditionPack()
                 {
@@ -119,7 +119,7 @@ namespace gRPC.Select.Test.Tests
             var _expectedResult = _context.Table.Where(t => t.Id == 2 || t.Id == 3).ToArray();
 
             // Act
-            var _assertedResult = _selector.Apply(_context.Table.AsQueryable(), _selectReqest).ToArray();
+            var _assertedResult = _selector.Apply(_context.Table.AsQueryable(), _selectRequest).ToArray();
 
             // Assert
             Assert.IsTrue(DataModel.CompareArr(_expectedResult, _assertedResult));
@@ -131,7 +131,7 @@ namespace gRPC.Select.Test.Tests
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
             ISelector _selector = new Selector();
-            var _selectReqest = new SelectRequest()
+            var _selectRequest = new SelectRequest()
             {
                 SelectConditionPack = new SelectConditionPack()
                 {
@@ -149,7 +149,7 @@ namespace gRPC.Select.Test.Tests
             var _expectedResult = _context.Table.Where(t => t.Id == 2 || t.Id == 3).ToArray();
 
             // Act
-            var _assertedResult = _selector.Apply(_context.Table.AsQueryable(), _selectReqest).ToArray();
+            var _assertedResult = _selector.Apply(_context.Table.AsQueryable(), _selectRequest).ToArray();
 
             // Assert
             Assert.IsTrue(DataModel.CompareArr(_expectedResult, _assertedResult));
@@ -161,7 +161,7 @@ namespace gRPC.Select.Test.Tests
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
             ISelector _selector = new Selector();
-            var _selectReqest = new SelectRequest()
+            var _selectRequest = new SelectRequest()
             {
                 SelectCondition = new SelectCondition()
                     {Condition = CompareCondition.Eq, Value = "aoeui", PropertyName = nameof(DataModel.StringValue),Converter = Converter.ToLower}
@@ -169,7 +169,7 @@ namespace gRPC.Select.Test.Tests
             var _expectedResult = _context.Table.Single(t => t.StringValue.ToLower() == "aoeui");
 
             // Act
-            var _assertedResult = _selector.Apply(_context.Table.AsQueryable(), _selectReqest).ToArray();
+            var _assertedResult = _selector.Apply(_context.Table.AsQueryable(), _selectRequest).ToArray();
 
             // Assert
             Assert.AreEqual(1, _assertedResult.Count());
