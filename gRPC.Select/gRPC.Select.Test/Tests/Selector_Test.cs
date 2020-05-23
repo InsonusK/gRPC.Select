@@ -175,5 +175,23 @@ namespace gRPC.Select.Test.Tests
             Assert.AreEqual(1, _assertedResult.Count());
             Assert.AreEqual(_expectedResult, _assertedResult[0]);
         }
+
+        [Test]
+        public void Empty_SelectConditior()
+        {
+            // Array
+            using var _context = new DBContext(_dbInit.DbContextOptions);
+            ISelector _selector = new Selector();
+            var _selectRequest = new SelectRequest();
+
+            var _expectedResult = _context.Table.Single(t => t.StringValue.ToLower() == "aoeui");
+
+            // Act
+            var _assertedResult = _selector.Apply(_context.Table.AsQueryable(), _selectRequest).ToArray();
+
+            // Assert
+            Assert.AreEqual(1, _assertedResult.Count());
+            Assert.AreEqual(_expectedResult, _assertedResult[0]);
+        }
     }
 }
