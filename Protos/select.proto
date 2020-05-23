@@ -37,8 +37,8 @@ message SelectConditionPack {
 }
 
 message SelectLines {
-    uint64 from = 1; // Row number, begin from 1; 0 - not setted
-    uint64 to = 2; // Row number, begin from 1; 0 - not setted
+    uint32 from = 1; // Row number, begin from 1; 0 - not setted
+    uint32 till = 2; // Row number, begin from 1; 0 - not setted
 }
 
 message SelectRequest {
