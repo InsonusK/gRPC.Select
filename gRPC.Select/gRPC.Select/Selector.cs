@@ -7,6 +7,7 @@ using gRPC.Select.Exceptions;
 using gRPC.Select.Interface;
 using gRPC.Select.LogicConditions;
 using gRPC.Select.PropertyConverters;
+using gRPC.Select.Tools;
 using GRPC.Selector;
 
 namespace gRPC.Select
@@ -17,7 +18,10 @@ namespace gRPC.Select
         private readonly ILogicConditionStrategy _logicConditionStrategy;
         private readonly IValueConverterStrategy _valueConverterStrategy;
 
-        public Selector():this(new CompareConditionStrategy(), new LogicConditionStrategy(), new ValueConverterStrategy()){}
+        public Selector() : this(new CompareConditionStrategy(), new LogicConditionStrategy(),
+            new ValueConverterStrategy())
+        {
+        }
 
         public Selector(ICompareConditionStrategy compareConditionStrategy,
             ILogicConditionStrategy logicConditionStrategy,
@@ -47,16 +51,42 @@ namespace gRPC.Select
 
         public IQueryable<TModel> Apply<TModel>(IQueryable<TModel> queryableData, SelectRequest selectRequest)
         {
-            return selectRequest.RootSelectConditionCase switch
+            var _queryableData = selectRequest.RootSelectConditionCase switch
             {
                 SelectRequest.RootSelectConditionOneofCase.None => queryableData,
-                SelectRequest.RootSelectConditionOneofCase.SelectCondition => Apply(queryableData,
-                    selectRequest.SelectCondition),
-                SelectRequest.RootSelectConditionOneofCase.SelectConditionPack => Apply(queryableData,
-                    selectRequest.SelectConditionPack),
+                SelectRequest.RootSelectConditionOneofCase.WhereSimple => Apply(queryableData,
+                    selectRequest.WhereSimple),
+                SelectRequest.RootSelectConditionOneofCase.Where => Apply(queryableData,
+                    selectRequest.Where),
                 _ => throw new ArgumentOutOfRangeException(nameof(selectRequest.RootSelectConditionCase),
                     selectRequest.RootSelectConditionCase, "Unexpected value")
             };
+
+            if (selectRequest.Lines.NotNullOrEmpty())
+            {
+               _queryableData = FilterRowsByIndex(_queryableData, selectRequest.Lines);
+            }
+
+            return _queryableData;
+        }
+
+        private IQueryable<TModel> FilterRowsByIndex<TModel>(IQueryable<TModel> queryableData, SelectLines selectRequestSelectLines)
+        {
+            var _returnQuery = queryableData;
+            int _from = 0;
+            if (selectRequestSelectLines.From > 0)
+            {
+                _from = (int) selectRequestSelectLines.From - 1;
+                _returnQuery = _returnQuery.Skip(_from);
+            }
+
+            if (selectRequestSelectLines.Till > 0)
+            {
+                int _skip = (int) selectRequestSelectLines.Till - _from;
+                _returnQuery = _returnQuery.Take(_skip);
+            }
+
+            return _returnQuery;
         }
 
         private static IQueryable<TModel> SelectQueryByExpression<TModel>(IQueryable<TModel> queryableData,

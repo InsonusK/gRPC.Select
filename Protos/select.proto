@@ -36,9 +36,15 @@ message SelectConditionPack {
     LogicCondition join_condition = 4; // Logic condition, default value 0 = And
 }
 
+message SelectLines {
+    uint32 from = 1; // Row number, begin from 1; 0 - not setted
+    uint32 till = 2; // Row number, begin from 1; 0 - not setted
+}
+
 message SelectRequest {
     oneof root_select_condition {
-        SelectCondition select_condition = 1;
-        SelectConditionPack select_condition_pack = 2;
+        SelectCondition where_simple = 1;
+        SelectConditionPack where = 2;
     }
+    SelectLines lines = 3;
 }

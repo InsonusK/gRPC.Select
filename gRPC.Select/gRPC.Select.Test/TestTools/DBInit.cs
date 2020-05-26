@@ -37,7 +37,16 @@ namespace gRPC.Select.Test.TestTools
         public void InitDB()
         {
             using DBContext _context = new DBContext(DbContextOptions);
-            // _context.Database.EnsureDeleted();
+
+            try
+            {
+                _context.Database.EnsureDeleted();
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+
             _context.Database.Migrate();
             AddValues();
         }
@@ -63,6 +72,13 @@ namespace gRPC.Select.Test.TestTools
                 {StringValue = "4", DoubleValue = 4.1, FloatValue = (float) 4.2, BoolValue = true});
             _context.Table.Add(new DataModel()
                 {StringValue = "aOeUi", DoubleValue = 5.1, FloatValue = (float) 5.2, BoolValue = false});
+
+            for (int i = 0; i < 10; i++)
+            {
+                _context.Table.Add(new DataModel()
+                    {StringValue = "many", DoubleValue = 11 + i, FloatValue = (float) 10.1 + i, BoolValue = false});
+            }
+
             _context.SaveChanges();
         }
     }
