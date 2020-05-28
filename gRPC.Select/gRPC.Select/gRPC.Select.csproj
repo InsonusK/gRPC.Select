@@ -18,18 +18,16 @@
       <PackageReference Include="Google.Protobuf" Version="3.11.4" />
       <PackageReference Include="Grpc.Tools" Version="2.29.0" />
     </ItemGroup>
-    
-    <ItemGroup>
-        <Protobuf Include="..\..\Protos\select.proto">
-          <GrpcServices>Server</GrpcServices>
-          <Access>Public</Access>
-          <ProtoCompile>True</ProtoCompile>
-          <ProtoRoot></ProtoRoot>
-          <CompileOutputs>True</CompileOutputs>
-          <OutputDir>obj\Debug\netstandard2.1\</OutputDir>
-          <Generator>MSBuild:Compile</Generator>
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Protobuf>
-    </ItemGroup>
 
+    <ItemGroup>
+        <Protobuf Include="Protos\select.proto">
+            <GrpcServices>Server</GrpcServices>
+            <ProtoRoot>Protos</ProtoRoot>
+            <OutputDir>obj/Debug/netstandard2.1/</OutputDir>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Protobuf>
+        <Content Include="Protos\select.proto">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 </Project>
