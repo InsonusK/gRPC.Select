@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package gRPC.Selector.Enum;
+
+enum CompareCondition {
+    EQ = 0;
+    NE = 1;
+    GT = 2;
+    LT = 3;
+    GE = 4;
+    LE = 5;
+}
+
+enum LogicCondition {
+    AND = 0;
+    OR = 1;
+}
+
+enum Converter {
+    Non = 0;
+    ToLower = 1;
+    ToUpper = 2;
+}
+
+

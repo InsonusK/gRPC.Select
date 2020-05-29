@@ -1,5 +1,5 @@
 using gRPC.Select.Interface;
-using GRPC.Selector;
+using GRPC.Selector.Enum;
 
 namespace gRPC.Select.PropertyConverters
 {

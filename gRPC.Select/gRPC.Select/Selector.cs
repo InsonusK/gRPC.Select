@@ -1,7 +1,8 @@
 using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
+using Google.Protobuf;
+using gRPC.Select.Adapter;
 using gRPC.Select.CompareConditions;
 using gRPC.Select.Exceptions;
 using gRPC.Select.Interface;
@@ -9,6 +10,7 @@ using gRPC.Select.LogicConditions;
 using gRPC.Select.PropertyConverters;
 using gRPC.Select.Tools;
 using GRPC.Selector;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace gRPC.Select
 {
@@ -17,22 +19,25 @@ namespace gRPC.Select
         private readonly ICompareConditionStrategy _compareConditionStrategy;
         private readonly ILogicConditionStrategy _logicConditionStrategy;
         private readonly IValueConverterStrategy _valueConverterStrategy;
+        private readonly IServiceProvider _serviceProvider;
 
-        public Selector() : this(new CompareConditionStrategy(), new LogicConditionStrategy(),
-            new ValueConverterStrategy())
+        public Selector(IServiceProvider serviceProvider) : this(new CompareConditionStrategy(),
+            new LogicConditionStrategy(),
+            new ValueConverterStrategy(), serviceProvider)
         {
         }
 
         public Selector(ICompareConditionStrategy compareConditionStrategy,
             ILogicConditionStrategy logicConditionStrategy,
-            IValueConverterStrategy valueConverterStrategy)
+            IValueConverterStrategy valueConverterStrategy, IServiceProvider serviceProvider)
         {
             _compareConditionStrategy = compareConditionStrategy;
             _logicConditionStrategy = logicConditionStrategy;
             _valueConverterStrategy = valueConverterStrategy;
+            _serviceProvider = serviceProvider;
         }
 
-        public IQueryable<TModel> Apply<TModel>(IQueryable<TModel> queryableData,
+        private IQueryable<TModel> Apply<TModel>(IQueryable<TModel> queryableData,
             SelectConditionPack selectConditionPack)
         {
             var _parameter = Expression.Parameter(typeof(TModel), "x");
@@ -41,7 +46,7 @@ namespace gRPC.Select
         }
 
 
-        public IQueryable<TModel> Apply<TModel>(IQueryable<TModel> queryableData, SelectCondition selectCondition)
+        private IQueryable<TModel> Apply<TModel>(IQueryable<TModel> queryableData, SelectCondition selectCondition)
         {
             var _parameter = Expression.Parameter(typeof(TModel), "x");
             var _expression = CreateExpressionFromCondition(_parameter, selectCondition);
@@ -49,8 +54,19 @@ namespace gRPC.Select
             return SelectQueryByExpression(queryableData, _expression, _parameter);
         }
 
-        public IQueryable<TModel> Apply<TModel>(IQueryable<TModel> queryableData, SelectRequest selectRequest)
+        public IQueryable<TModel> Apply<TModel, TConditionMessage>(IQueryable<TModel> queryableData,
+            TConditionMessage conditionMessage)
         {
+            var _conditionAdapter = _serviceProvider.GetService<IConditionAdapter<TConditionMessage>>();
+            if (_conditionAdapter == null)
+            {
+                throw new ConditionException($"An expected type of condition message",
+                    new ArgumentOutOfRangeException(
+                        $"Type {typeof(IConditionAdapter<TConditionMessage>)} does not registered in Service Provider"));
+            }
+
+            SelectRequest selectRequest = _conditionAdapter.Convert(conditionMessage);
+
             var _queryableData = selectRequest.RootSelectConditionCase switch
             {
                 SelectRequest.RootSelectConditionOneofCase.None => queryableData,
@@ -64,13 +80,14 @@ namespace gRPC.Select
 
             if (selectRequest.Lines.NotNullOrEmpty())
             {
-               _queryableData = FilterRowsByIndex(_queryableData, selectRequest.Lines);
+                _queryableData = FilterRowsByIndex(_queryableData, selectRequest.Lines);
             }
 
             return _queryableData;
         }
 
-        private IQueryable<TModel> FilterRowsByIndex<TModel>(IQueryable<TModel> queryableData, SelectLines selectRequestSelectLines)
+        private IQueryable<TModel> FilterRowsByIndex<TModel>(IQueryable<TModel> queryableData,
+            SelectLines selectRequestSelectLines)
         {
             var _returnQuery = queryableData;
             int _from = 0;
