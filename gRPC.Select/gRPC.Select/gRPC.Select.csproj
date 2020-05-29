@@ -17,17 +17,19 @@
     <ItemGroup>
       <PackageReference Include="Google.Protobuf" Version="3.11.4" />
       <PackageReference Include="Grpc.Tools" Version="2.29.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.4" />
     </ItemGroup>
 
     <ItemGroup>
         <Protobuf Include="Protos\select.proto">
             <GrpcServices>Server</GrpcServices>
             <ProtoRoot>Protos</ProtoRoot>
-            <OutputDir>obj/Debug/netstandard2.1/</OutputDir>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Protobuf>
-        <Content Include="Protos\select.proto">
+        <Protobuf Include="Protos\select_enums.proto">
+            <GrpcServices>Server</GrpcServices>
+            <ProtoRoot>Protos</ProtoRoot>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
+        </Protobuf>
     </ItemGroup>
 </Project>

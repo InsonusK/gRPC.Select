@@ -1,6 +1,7 @@
 using System;
 using gRPC.Select.Interface;
 using gRPC.Select.LogicConditions;
+using GRPC.Selector.Enum;
 using NUnit.Framework;
 
 namespace gRPC.Select.Test.Tests.LogicConditions
@@ -17,9 +18,9 @@ namespace gRPC.Select.Test.Tests.LogicConditions
         }
 
         [Test]
-        [TestCase(typeof(LogicConditionAnd), GRPC.Selector.LogicCondition.And)]
-        [TestCase(typeof(LogicConditionOr), GRPC.Selector.LogicCondition.Or)]
-        public void Match(Type expressionBuilderType, GRPC.Selector.LogicCondition condition)
+        [TestCase(typeof(LogicConditionAnd), LogicCondition.And)]
+        [TestCase(typeof(LogicConditionOr), LogicCondition.Or)]
+        public void Match(Type expressionBuilderType, LogicCondition condition)
         {
             // Array
 

@@ -1,5 +1,5 @@
 using System.Linq;
-using GRPC.Selector;
+using Google.Protobuf;
 
 namespace gRPC.Select.Interface
 {
@@ -9,30 +9,14 @@ namespace gRPC.Select.Interface
     public interface ISelector
     {
         /// <summary>
-        /// Select from IQueryable using pack of conditions
-        /// </summary>
-        /// <param name="queryableData">IQueryable for selection</param>
-        /// <param name="selectConditionPack">pack of select conditions</param>
-        /// <typeparam name="TModel">Model in IQueryable</typeparam>
-        /// <returns></returns>
-        IQueryable<TModel> Apply<TModel>(IQueryable<TModel> queryableData, SelectConditionPack selectConditionPack);
-
-        /// <summary>
-        /// Select from IQueryable using single condition
-        /// </summary>
-        /// <param name="queryableData">IQueryable for selection</param>
-        /// <param name="selectCondition">Select condition</param>
-        /// <typeparam name="TModel">Model in IQueryable</typeparam>
-        /// <returns></returns>
-        IQueryable<TModel> Apply<TModel>(IQueryable<TModel> queryableData, SelectCondition selectCondition);
-
-        /// <summary>
         /// Select from IQueryable using select request
         /// </summary>
         /// <param name="queryableData">IQueryable for selection</param>
-        /// <param name="selectRequest">Select condition</param>
+        /// <param name="conditionMessage">Select condition</param>
         /// <typeparam name="TModel">Model in IQueryable</typeparam>
+        /// <typeparam name="TConditionMessage">ProtoMessage Type</typeparam>
         /// <returns></returns>
-        IQueryable<TModel> Apply<TModel>(IQueryable<TModel> queryableData, SelectRequest selectRequest);
+        IQueryable<TModel> Apply<TModel, TConditionMessage>(IQueryable<TModel> queryableData,
+            TConditionMessage conditionMessage);
     }
 }

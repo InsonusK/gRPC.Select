@@ -20,7 +20,7 @@ namespace gRPC.Select.Test.Migrations
                 .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("gRPC.Select.Test.TestTools.DataModel", b =>
+            modelBuilder.Entity("gRPC.Select.TestCore.TestTools.DataModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

@@ -2,7 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gRPC.Select", "gRPC.Select\gRPC.Select.csproj", "{13478DDC-EA42-46AC-8AA1-2BD556ABA8ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gRPC.Select.Test", "gRPC.Select.Test\gRPC.Select.Test.csproj", "{666DA9D5-2270-4139-BFCD-67A129079143}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gRPC.Select.TestCore", "gRPC.Select.TestCore\gRPC.Select.TestCore.csproj", "{666DA9D5-2270-4139-BFCD-67A129079143}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gRPC.Select.TestInterface", "gRPC.Select.TestInterface\gRPC.Select.TestInterface.csproj", "{45D7218A-42E4-4358-B23B-649724D0507F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gRPC.Select.TestDB", "gRPC.Select.TestDB\gRPC.Select.TestDB.csproj", "{FA65D26C-C8F4-409B-AEC9-9C9887F40051}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +22,13 @@ Global
 		{666DA9D5-2270-4139-BFCD-67A129079143}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{666DA9D5-2270-4139-BFCD-67A129079143}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{666DA9D5-2270-4139-BFCD-67A129079143}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45D7218A-42E4-4358-B23B-649724D0507F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45D7218A-42E4-4358-B23B-649724D0507F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45D7218A-42E4-4358-B23B-649724D0507F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45D7218A-42E4-4358-B23B-649724D0507F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA65D26C-C8F4-409B-AEC9-9C9887F40051}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA65D26C-C8F4-409B-AEC9-9C9887F40051}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA65D26C-C8F4-409B-AEC9-9C9887F40051}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA65D26C-C8F4-409B-AEC9-9C9887F40051}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

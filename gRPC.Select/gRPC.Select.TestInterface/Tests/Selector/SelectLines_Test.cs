@@ -1,8 +1,13 @@
+using System;
 using System.Linq;
+using Google.Protobuf;
+using gRPC.Select.Adapter;
 using gRPC.Select.Interface;
 using gRPC.Select.Test.TestTools;
-using GRPC.Selector;
+using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
+using Test.Selector;
 
 namespace gRPC.Select.Test.Tests.Selector
 {
@@ -10,12 +15,20 @@ namespace gRPC.Select.Test.Tests.Selector
     public class SelectLines_Test
     {
         private DBInit _dbInit;
+        private IServiceProvider _serviceProvider;
+        private BaseProtoAdapter<TestSelectRequestStruct> _adapter = new BaseProtoAdapter<TestSelectRequestStruct>();
 
         [SetUp]
         public void OnTimeSetup()
         {
             _dbInit = new DBInit(this.GetType().Name);
             _dbInit.InitDB();
+            _serviceProvider = Substitute.For<IServiceProvider>();
+            _serviceProvider
+                .GetService(
+                    Arg.Is<Type>((type =>
+                        type == typeof(IConditionAdapter<TestSelectRequestStruct>))))
+                .Returns((callback) => _adapter);
         }
 
         [TearDown]
@@ -29,8 +42,8 @@ namespace gRPC.Select.Test.Tests.Selector
         {
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
-            ISelector _selector = new Select.Selector();
-            var _selectRequest = new SelectRequest()
+            ISelector _selector = new Select.Selector(_serviceProvider);
+            var _selectRequest = new TestSelectRequestStruct()
             {
                 WhereSimple =
                     new SelectCondition()
@@ -50,8 +63,8 @@ namespace gRPC.Select.Test.Tests.Selector
         {
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
-            ISelector _selector = new Select.Selector();
-            var _selectRequest = new SelectRequest()
+            ISelector _selector = new Select.Selector(_serviceProvider);
+            var _selectRequest = new TestSelectRequestStruct()
             {
                 WhereSimple =
                     new SelectCondition()
@@ -72,8 +85,8 @@ namespace gRPC.Select.Test.Tests.Selector
         {
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
-            ISelector _selector = new Select.Selector();
-            var _selectRequest = new SelectRequest()
+            ISelector _selector = new Select.Selector(_serviceProvider);
+            var _selectRequest = new TestSelectRequestStruct()
             {
                 WhereSimple =
                     new SelectCondition()
@@ -96,8 +109,8 @@ namespace gRPC.Select.Test.Tests.Selector
         {
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
-            ISelector _selector = new Select.Selector();
-            var _selectRequest = new SelectRequest()
+            ISelector _selector = new Select.Selector(_serviceProvider);
+            var _selectRequest = new TestSelectRequestStruct()
             {
                 WhereSimple =
                     new SelectCondition()
@@ -119,8 +132,8 @@ namespace gRPC.Select.Test.Tests.Selector
         {
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
-            ISelector _selector = new Select.Selector();
-            var _selectRequest = new SelectRequest()
+            ISelector _selector = new Select.Selector(_serviceProvider);
+            var _selectRequest = new TestSelectRequestStruct()
             {
                 WhereSimple =
                     new SelectCondition()

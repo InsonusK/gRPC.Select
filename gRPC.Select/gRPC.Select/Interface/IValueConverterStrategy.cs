@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using GRPC.Selector;
+using GRPC.Selector.Enum;
 
 namespace gRPC.Select.Interface
 {

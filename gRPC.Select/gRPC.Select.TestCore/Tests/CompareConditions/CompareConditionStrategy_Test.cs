@@ -1,6 +1,7 @@
 using System;
 using gRPC.Select.CompareConditions;
 using gRPC.Select.Interface;
+using GRPC.Selector.Enum;
 using NUnit.Framework;
 
 namespace gRPC.Select.Test.Tests.CompareConditions
@@ -17,13 +18,13 @@ namespace gRPC.Select.Test.Tests.CompareConditions
         }
 
         [Test]
-        [TestCase(typeof(CompareConditionEq), GRPC.Selector.CompareCondition.Eq)]
-        [TestCase(typeof(CompareConditionGe), GRPC.Selector.CompareCondition.Ge)]
-        [TestCase(typeof(CompareConditionGt), GRPC.Selector.CompareCondition.Gt)]
-        [TestCase(typeof(CompareConditionLe), GRPC.Selector.CompareCondition.Le)]
-        [TestCase(typeof(CompareConditionLt), GRPC.Selector.CompareCondition.Lt)]
-        [TestCase(typeof(CompareConditionNe), GRPC.Selector.CompareCondition.Ne)]
-        public void Match(Type expressionBuilderType, GRPC.Selector.CompareCondition condition)
+        [TestCase(typeof(CompareConditionEq), CompareCondition.Eq)]
+        [TestCase(typeof(CompareConditionGe), CompareCondition.Ge)]
+        [TestCase(typeof(CompareConditionGt), CompareCondition.Gt)]
+        [TestCase(typeof(CompareConditionLe), CompareCondition.Le)]
+        [TestCase(typeof(CompareConditionLt), CompareCondition.Lt)]
+        [TestCase(typeof(CompareConditionNe), CompareCondition.Ne)]
+        public void Match(Type expressionBuilderType, CompareCondition condition)
         {
             // Array
 
