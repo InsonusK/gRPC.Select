@@ -2,6 +2,7 @@ using System;
 using gRPC.Select.Interface;
 using gRPC.Select.PropertyConverters;
 using GRPC.Selector;
+using GRPC.Selector.Enum;
 using NUnit.Framework;
 
 namespace gRPC.Select.Test.Tests.PropertyConverters
