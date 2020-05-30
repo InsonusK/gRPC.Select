@@ -27,8 +27,12 @@ namespace GrpcService.Services
         public override async Task<Response> SelectOne(Select request, ServerCallContext context)
         {
             var resp = new Response();
-            var tab = await _selector.Apply(_context.Table, request)
-                .Select(model => new SomeData() {Id = model.Id, Value = model.StringValue}).ToArrayAsync();
+            var tab = await _selector
+                .Apply(
+                    _context.Table
+                        .Select(model => new SomeData() {Id = model.Id, Value = model.StringValue}),
+                    request)
+                .ToArrayAsync();
             resp.Tab.AddRange(tab);
             return resp;
         }
@@ -36,8 +40,12 @@ namespace GrpcService.Services
         public override async Task<Response> SelectTwo(SelectRequest request, ServerCallContext context)
         {
             var resp = new Response();
-            var tab = await _selector.Apply(_context.Table, request)
-                .Select(model => new SomeData() {Id = model.Id, Value = model.StringValue}).ToArrayAsync();
+            var tab = await _selector
+                .Apply(
+                    _context.Table
+                        .Select(model => new SomeData() {Id = model.Id, Value = model.StringValue}),
+                    request)
+                .ToArrayAsync();
             resp.Tab.AddRange(tab);
             return resp;
         }
