@@ -2,12 +2,12 @@ using System;
 using System.Linq;
 using gRPC.Select.Exceptions;
 using gRPC.Select.Interface;
-using gRPC.Select.Test.TestTools;
+using gRPC.Select.TestDB.TestTools;
 using NSubstitute;
 using NUnit.Framework;
 using Test;
 
-namespace gRPC.Select.Test.Tests.Selector
+namespace gRPC.Select.TestInterface.Tests.Selector
 {
     public class SelectorRequest_Test
     {

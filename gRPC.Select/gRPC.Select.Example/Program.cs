@@ -1,28 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using gRPC.Select.Test.TestTools;
+using gRPC.Select.TestDB.TestTools;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace GrpcService
+namespace GrpcService.Example
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            var init = new DBInit("gRPCSelectExampleDB");
+            var _init = new DBInit("gRPCSelectExampleDB");
             try
             {
-                init.InitDB();
+                _init.InitDB();
                 CreateHostBuilder(args).Build().Run();
             }
             finally
             {
-                init.CleanupDB();
+                _init.CleanupDB();
             }
 
         }

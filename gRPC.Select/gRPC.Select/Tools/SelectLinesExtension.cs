@@ -4,10 +4,10 @@ namespace gRPC.Select.Tools
 {
     public static class SelectLinesExtension
     {
-        public static bool NotNullOrEmpty(this SelectLines SelectLines)
+        public static bool NotNullOrEmpty(this SelectLines selectLines)
         {
-            return SelectLines != null &&
-                   (SelectLines.From > 0 || SelectLines.Till > 0);
+            return selectLines != null &&
+                   (selectLines.From > 0 || selectLines.Till > 0);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using NUnit.Framework;
 
-namespace gRPC.Select.Test.TestTools
+namespace gRPC.Select.TestDB.TestTools
 {
     public class DataModel:IEquatable<DataModel>
     {

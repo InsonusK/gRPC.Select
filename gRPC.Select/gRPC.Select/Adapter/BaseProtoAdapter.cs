@@ -1,4 +1,5 @@
 using Google.Protobuf;
+using gRPC.Select.Interface;
 using GRPC.Selector;
 
 namespace gRPC.Select.Adapter

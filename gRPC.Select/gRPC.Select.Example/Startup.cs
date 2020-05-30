@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using gRPC.Select;
+﻿using gRPC.Select;
 using gRPC.Select.Adapter;
 using gRPC.Select.Interface;
-using gRPC.Select.Test.TestTools;
-using GrpcService.Services;
+using gRPC.Select.TestDB.TestTools;
+using GrpcService.Example.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace GrpcService
+namespace GrpcService.Example
 {
     public class Startup
     {
@@ -22,8 +18,8 @@ namespace GrpcService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc();
-            services.AddSingleton<IConditionAdapter<Example.OtherStr.Select>>();
-            services.AddSingleton<IConditionAdapter<Example.Str.SelectRequest>>();
+            services.AddSingleton<IConditionAdapter<global::Example.OtherStr.Select>>();
+            services.AddSingleton<IConditionAdapter<global::Example.Str.SelectRequest>>();
             services.AddSingleton<ISelector>((provider => new Selector(provider)));
             services.AddDbContext<DBContext>();
         }

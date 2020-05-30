@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace gRPC.Select.Test.Migrations
+namespace gRPC.Select.TestDB.Migrations
 {
     public partial class Init : Migration
     {

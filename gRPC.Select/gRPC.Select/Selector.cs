@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Google.Protobuf;
 using gRPC.Select.Adapter;
 using gRPC.Select.CompareConditions;
 using gRPC.Select.Exceptions;
@@ -65,22 +64,22 @@ namespace gRPC.Select
                         $"Type {typeof(IConditionAdapter<TConditionMessage>)} does not registered in Service Provider"));
             }
 
-            SelectRequest selectRequest = _conditionAdapter.Convert(conditionMessage);
+            SelectRequest _selectRequest = _conditionAdapter.Convert(conditionMessage);
 
-            var _queryableData = selectRequest.RootSelectConditionCase switch
+            var _queryableData = _selectRequest.RootSelectConditionCase switch
             {
                 SelectRequest.RootSelectConditionOneofCase.None => queryableData,
                 SelectRequest.RootSelectConditionOneofCase.WhereSimple => Apply(queryableData,
-                    selectRequest.WhereSimple),
+                    _selectRequest.WhereSimple),
                 SelectRequest.RootSelectConditionOneofCase.Where => Apply(queryableData,
-                    selectRequest.Where),
-                _ => throw new ArgumentOutOfRangeException(nameof(selectRequest.RootSelectConditionCase),
-                    selectRequest.RootSelectConditionCase, "Unexpected value")
+                    _selectRequest.Where),
+                _ => throw new ArgumentOutOfRangeException(nameof(_selectRequest.RootSelectConditionCase),
+                    _selectRequest.RootSelectConditionCase, "Unexpected value")
             };
 
-            if (selectRequest.Lines.NotNullOrEmpty())
+            if (_selectRequest.Lines.NotNullOrEmpty())
             {
-                _queryableData = FilterRowsByIndex(_queryableData, selectRequest.Lines);
+                _queryableData = FilterRowsByIndex(_queryableData, _selectRequest.Lines);
             }
 
             return _queryableData;
