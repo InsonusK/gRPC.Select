@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+import "Protos/other_select_struct.proto";
+import "Protos/select.proto";
+
+package Example;
+
+message Response {
+    repeated SomeData tab = 1;
+}
+
+message SomeData {
+  int32 id = 1;
+  string value = 2;
+}
+
+service SelectService {
+    rpc SelectOne(OtherStr.Select) returns (Response);
+    rpc SelectTwo(Str.SelectRequest) returns (Response);
+}

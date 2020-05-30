@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package Example.OtherStr;
+
+enum CompCondition {
+    EQ = 0;
+    NE = 1;
+    GT = 2;
+    LT = 3;
+    GE = 4;
+    LE = 5;
+}
+
+enum LogCondition {
+    AND = 0;
+    OR = 1;
+}
+
+enum Convert {
+    Non = 0;
+    ToLower = 1;
+    ToUpper = 2;
+}
+
+message Condition {
+    string property_name = 1; // Property name, set empty to compare with parameter
+    Convert converter = 2; // Value converter, default value 0 = no converter
+    CompCondition condition = 3; // Compare condition, default value 0 = equal
+    string value = 4;
+}
+
+message ConditionPack {
+    bool not = 1; // Flag should be used logic negation
+    repeated Condition select_conditions = 2;
+    repeated ConditionPack select_condition_packs = 3;
+    LogCondition join_condition = 4; // Logic condition, default value 0 = And
+}
+
+message Lines {
+    uint32 from = 1; // Row number, begin from 1; 0 - not setted
+    uint32 till = 2; // Row number, begin from 1; 0 - not setted
+}
+
+message Select {
+    oneof root_select_condition {
+        Condition where_simple = 1;
+        ConditionPack where = 2;
+    }
+    Lines lines = 3;
+}
