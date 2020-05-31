@@ -2,16 +2,12 @@ using System;
 using System.Linq;
 using gRPC.Select.Adapter;
 using gRPC.Select.Interface;
-using gRPC.Select.Test.TestTools;
+using gRPC.Select.TestDB.TestTools;
 using NSubstitute;
-using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
 using Test.Selector;
-using CodedInputStream = Google.Protobuf.CodedInputStream;
-using CodedOutputStream = Google.Protobuf.CodedOutputStream;
-using MessageExtensions = Google.Protobuf.MessageExtensions;
 
-namespace gRPC.Select.Test.Tests.Selector
+namespace gRPC.Select.TestInterface.Tests.Selector
 {
     public class SelectorCondition_Test
     {
@@ -42,10 +38,9 @@ namespace gRPC.Select.Test.Tests.Selector
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
             ISelector _selector = new Select.Selector(_serviceProvider);
-            var _selectRequest = new TestSelectRequestStruct()
+            var _selectRequest = new TestSelectRequestStruct
             {
-                WhereSimple = new SelectCondition()
-                    {Condition = CompareCondition.Eq, Value = "2", PropertyName = nameof(DataModel.Id)}
+                WhereSimple = new SelectCondition {Condition = CompareCondition.Eq, Value = "2", PropertyName = nameof(DataModel.Id)}
             };
             var _expectedResult = _context.Table.Single(t => t.Id == 2);
 
@@ -63,16 +58,14 @@ namespace gRPC.Select.Test.Tests.Selector
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
             ISelector _selector = new Select.Selector(_serviceProvider);
-            var _selectRequest = new TestSelectRequestStruct()
+            var _selectRequest = new TestSelectRequestStruct
             {
-                Where = new SelectConditionPack()
+                Where = new SelectConditionPack
                 {
                     SelectConditions =
                     {
-                        new SelectCondition()
-                            {Condition = CompareCondition.Eq, Value = "2", PropertyName = nameof(DataModel.Id)},
-                        new SelectCondition()
-                            {Condition = CompareCondition.Eq, Value = "3", PropertyName = nameof(DataModel.Id)}
+                        new SelectCondition {Condition = CompareCondition.Eq, Value = "2", PropertyName = nameof(DataModel.Id)},
+                        new SelectCondition {Condition = CompareCondition.Eq, Value = "3", PropertyName = nameof(DataModel.Id)}
                     },
                     JoinCondition = LogicCondition.Or
                 }
@@ -92,39 +85,35 @@ namespace gRPC.Select.Test.Tests.Selector
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
             ISelector _selector = new Select.Selector(_serviceProvider);
-            var _filterByString = new SelectConditionPack()
+            var _filterByString = new SelectConditionPack
             {
                 SelectConditions =
                 {
-                    new SelectCondition()
-                        {Condition = CompareCondition.Eq, Value = "2", PropertyName = nameof(DataModel.StringValue)},
-                    new SelectCondition()
-                        {Condition = CompareCondition.Eq, Value = "3", PropertyName = nameof(DataModel.StringValue)}
+                    new SelectCondition {Condition = CompareCondition.Eq, Value = "2", PropertyName = nameof(DataModel.StringValue)},
+                    new SelectCondition {Condition = CompareCondition.Eq, Value = "3", PropertyName = nameof(DataModel.StringValue)}
                 },
                 JoinCondition = LogicCondition.Or
             };
-            var _filterById = new SelectConditionPack()
+            var _filterById = new SelectConditionPack
             {
                 SelectConditions =
                 {
-                    new SelectCondition()
-                        {Condition = CompareCondition.Eq, Value = "2", PropertyName = nameof(DataModel.Id)},
-                    new SelectCondition()
-                        {Condition = CompareCondition.Eq, Value = "3", PropertyName = nameof(DataModel.Id)}
+                    new SelectCondition {Condition = CompareCondition.Eq, Value = "2", PropertyName = nameof(DataModel.Id)},
+                    new SelectCondition {Condition = CompareCondition.Eq, Value = "3", PropertyName = nameof(DataModel.Id)}
                 },
                 JoinCondition = LogicCondition.Or
             };
-            var _selectRequest = new TestSelectRequestStruct()
+            var _selectRequest = new TestSelectRequestStruct
             {
-                Where = new SelectConditionPack()
+                Where = new SelectConditionPack
                 {
                     SelectConditions =
                     {
-                        new SelectCondition()
+                        new SelectCondition
                         {
                             Condition = CompareCondition.Ge, Value = "2", PropertyName = nameof(DataModel.DoubleValue)
                         },
-                        new SelectCondition()
+                        new SelectCondition
                         {
                             Condition = CompareCondition.Lt, Value = "3.6", PropertyName = nameof(DataModel.FloatValue)
                         }
@@ -148,16 +137,14 @@ namespace gRPC.Select.Test.Tests.Selector
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
             ISelector _selector = new Select.Selector(_serviceProvider);
-            var _selectRequest = new TestSelectRequestStruct()
+            var _selectRequest = new TestSelectRequestStruct
             {
-                Where = new SelectConditionPack()
+                Where = new SelectConditionPack
                 {
                     SelectConditions =
                     {
-                        new SelectCondition()
-                            {Condition = CompareCondition.Lt, Value = "2", PropertyName = nameof(DataModel.Id)},
-                        new SelectCondition()
-                            {Condition = CompareCondition.Gt, Value = "3", PropertyName = nameof(DataModel.Id)}
+                        new SelectCondition {Condition = CompareCondition.Lt, Value = "2", PropertyName = nameof(DataModel.Id)},
+                        new SelectCondition {Condition = CompareCondition.Gt, Value = "3", PropertyName = nameof(DataModel.Id)}
                     },
                     JoinCondition = LogicCondition.Or,
                     Not = true
@@ -178,9 +165,9 @@ namespace gRPC.Select.Test.Tests.Selector
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
             ISelector _selector = new Select.Selector(_serviceProvider);
-            var _selectRequest = new TestSelectRequestStruct()
+            var _selectRequest = new TestSelectRequestStruct
             {
-                WhereSimple = new SelectCondition()
+                WhereSimple = new SelectCondition
                 {
                     Condition = CompareCondition.Eq, Value = "aoeui", PropertyName = nameof(DataModel.StringValue),
                     Converter = Converter.ToLower

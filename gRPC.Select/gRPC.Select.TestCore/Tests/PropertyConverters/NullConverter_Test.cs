@@ -93,8 +93,7 @@ namespace gRPC.Select.Test.Tests.PropertyConverters
         public void ConvertProperty_String()
         {
             // Array
-            var _testClass = new TestClass()
-                {StringValue = "AOEuI", IntValue = 1, DoubleValue = 2.232, BoolValue = true};
+            var _testClass = new TestClass {StringValue = "AOEuI", IntValue = 1, DoubleValue = 2.232, BoolValue = true};
             var _parameter = Expression.Parameter(typeof(TestClass), "x");
 
             var _property = Expression.Property(_parameter, nameof(TestClass.StringValue));
@@ -113,8 +112,7 @@ namespace gRPC.Select.Test.Tests.PropertyConverters
         public void ConvertProperty_Int()
         {
             // Array
-            var _testClass = new TestClass()
-                {StringValue = "AOEuI", IntValue = 1, DoubleValue = 2.232, BoolValue = true};
+            var _testClass = new TestClass {StringValue = "AOEuI", IntValue = 1, DoubleValue = 2.232, BoolValue = true};
             var _parameter = Expression.Parameter(typeof(TestClass), "x");
 
             var _property = Expression.Property(_parameter, nameof(TestClass.IntValue));
@@ -133,8 +131,7 @@ namespace gRPC.Select.Test.Tests.PropertyConverters
         public void ConvertProperty_Double()
         {
             // Array
-            var _testClass = new TestClass()
-                {StringValue = "AOEuI", IntValue = 1, DoubleValue = 2.232, BoolValue = true};
+            var _testClass = new TestClass {StringValue = "AOEuI", IntValue = 1, DoubleValue = 2.232, BoolValue = true};
             var _parameter = Expression.Parameter(typeof(TestClass), "x");
 
             var _property = Expression.Property(_parameter, nameof(TestClass.DoubleValue));
@@ -153,8 +150,7 @@ namespace gRPC.Select.Test.Tests.PropertyConverters
         public void ConvertProperty_Bool()
         {
             // Array
-            var _testClass = new TestClass()
-                {StringValue = "AOEuI", IntValue = 1, DoubleValue = 2.232, BoolValue = true};
+            var _testClass = new TestClass {StringValue = "AOEuI", IntValue = 1, DoubleValue = 2.232, BoolValue = true};
             var _parameter = Expression.Parameter(typeof(TestClass), "x");
 
             var _property = Expression.Property(_parameter, nameof(TestClass.BoolValue));

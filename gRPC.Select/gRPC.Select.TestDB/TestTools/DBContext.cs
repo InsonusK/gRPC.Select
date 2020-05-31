@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
-namespace gRPC.Select.Test.TestTools
+namespace gRPC.Select.TestDB.TestTools
 {
     public class DBContext : DbContext
     {

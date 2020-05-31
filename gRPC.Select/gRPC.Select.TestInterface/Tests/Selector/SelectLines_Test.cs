@@ -1,15 +1,13 @@
 using System;
 using System.Linq;
-using Google.Protobuf;
 using gRPC.Select.Adapter;
 using gRPC.Select.Interface;
-using gRPC.Select.Test.TestTools;
+using gRPC.Select.TestDB.TestTools;
 using NSubstitute;
-using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
 using Test.Selector;
 
-namespace gRPC.Select.Test.Tests.Selector
+namespace gRPC.Select.TestInterface.Tests.Selector
 {
     [TestFixture]
     public class SelectLines_Test
@@ -43,11 +41,10 @@ namespace gRPC.Select.Test.Tests.Selector
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
             ISelector _selector = new Select.Selector(_serviceProvider);
-            var _selectRequest = new TestSelectRequestStruct()
+            var _selectRequest = new TestSelectRequestStruct
             {
                 WhereSimple =
-                    new SelectCondition()
-                        {Condition = CompareCondition.Eq, Value = "many", PropertyName = nameof(DataModel.StringValue)},
+                    new SelectCondition {Condition = CompareCondition.Eq, Value = "many", PropertyName = nameof(DataModel.StringValue)},
             };
             var _expectedResult = _context.Table.Where(t => t.StringValue == "many").ToArray();
 
@@ -64,11 +61,10 @@ namespace gRPC.Select.Test.Tests.Selector
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
             ISelector _selector = new Select.Selector(_serviceProvider);
-            var _selectRequest = new TestSelectRequestStruct()
+            var _selectRequest = new TestSelectRequestStruct
             {
                 WhereSimple =
-                    new SelectCondition()
-                        {Condition = CompareCondition.Eq, Value = "many", PropertyName = nameof(DataModel.StringValue)},
+                    new SelectCondition {Condition = CompareCondition.Eq, Value = "many", PropertyName = nameof(DataModel.StringValue)},
                 Lines = new SelectLines()
             };
             var _expectedResult = _context.Table.Where(t => t.StringValue == "many").ToArray();
@@ -86,12 +82,11 @@ namespace gRPC.Select.Test.Tests.Selector
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
             ISelector _selector = new Select.Selector(_serviceProvider);
-            var _selectRequest = new TestSelectRequestStruct()
+            var _selectRequest = new TestSelectRequestStruct
             {
                 WhereSimple =
-                    new SelectCondition()
-                        {Condition = CompareCondition.Eq, Value = "many", PropertyName = nameof(DataModel.StringValue)},
-                Lines = new SelectLines() {From = 3}
+                    new SelectCondition {Condition = CompareCondition.Eq, Value = "many", PropertyName = nameof(DataModel.StringValue)},
+                Lines = new SelectLines {From = 3}
             };
             var _expectedResult = _context.Table
                 .Where(t => t.StringValue == "many" && t.DoubleValue >= 13).ToArray();
@@ -110,12 +105,11 @@ namespace gRPC.Select.Test.Tests.Selector
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
             ISelector _selector = new Select.Selector(_serviceProvider);
-            var _selectRequest = new TestSelectRequestStruct()
+            var _selectRequest = new TestSelectRequestStruct
             {
                 WhereSimple =
-                    new SelectCondition()
-                        {Condition = CompareCondition.Eq, Value = "many", PropertyName = nameof(DataModel.StringValue)},
-                Lines = new SelectLines() {Till = 3}
+                    new SelectCondition {Condition = CompareCondition.Eq, Value = "many", PropertyName = nameof(DataModel.StringValue)},
+                Lines = new SelectLines {Till = 3}
             };
             var _expectedResult = _context.Table
                 .Where(t => t.StringValue == "many" && t.DoubleValue <= 13).ToArray();
@@ -133,12 +127,11 @@ namespace gRPC.Select.Test.Tests.Selector
             // Array
             using var _context = new DBContext(_dbInit.DbContextOptions);
             ISelector _selector = new Select.Selector(_serviceProvider);
-            var _selectRequest = new TestSelectRequestStruct()
+            var _selectRequest = new TestSelectRequestStruct
             {
                 WhereSimple =
-                    new SelectCondition()
-                        {Condition = CompareCondition.Eq, Value = "many", PropertyName = nameof(DataModel.StringValue)},
-                Lines = new SelectLines() {From = 3, Till = 7}
+                    new SelectCondition {Condition = CompareCondition.Eq, Value = "many", PropertyName = nameof(DataModel.StringValue)},
+                Lines = new SelectLines {From = 3, Till = 7}
             };
             var _expectedResult = _context.Table
                 .Where(t => t.StringValue == "many" && t.DoubleValue >= 13 && t.DoubleValue <= 17).ToArray();

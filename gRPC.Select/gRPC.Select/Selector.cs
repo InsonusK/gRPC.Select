@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Google.Protobuf;
 using gRPC.Select.Adapter;
 using gRPC.Select.CompareConditions;
 using gRPC.Select.Exceptions;
@@ -57,33 +56,40 @@ namespace gRPC.Select
         public IQueryable<TModel> Apply<TModel, TConditionMessage>(IQueryable<TModel> queryableData,
             TConditionMessage conditionMessage)
         {
-            var _conditionAdapter = _serviceProvider.GetService<IConditionAdapter<TConditionMessage>>();
-            if (_conditionAdapter == null)
-            {
-                throw new ConditionException($"An expected type of condition message",
-                    new ArgumentOutOfRangeException(
-                        $"Type {typeof(IConditionAdapter<TConditionMessage>)} does not registered in Service Provider"));
-            }
+            var _conditionAdapter = _serviceProvider.GetRequiredService<IConditionAdapter<TConditionMessage>>();
 
-            SelectRequest selectRequest = _conditionAdapter.Convert(conditionMessage);
+            SelectRequest _selectRequest = _conditionAdapter.Convert(conditionMessage);
 
-            var _queryableData = selectRequest.RootSelectConditionCase switch
+            var _queryableData = _selectRequest.RootSelectConditionCase switch
             {
                 SelectRequest.RootSelectConditionOneofCase.None => queryableData,
                 SelectRequest.RootSelectConditionOneofCase.WhereSimple => Apply(queryableData,
-                    selectRequest.WhereSimple),
+                    _selectRequest.WhereSimple),
                 SelectRequest.RootSelectConditionOneofCase.Where => Apply(queryableData,
-                    selectRequest.Where),
-                _ => throw new ArgumentOutOfRangeException(nameof(selectRequest.RootSelectConditionCase),
-                    selectRequest.RootSelectConditionCase, "Unexpected value")
+                    _selectRequest.Where),
+                _ => throw new ArgumentOutOfRangeException(nameof(_selectRequest.RootSelectConditionCase),
+                    _selectRequest.RootSelectConditionCase, "Unexpected value")
             };
 
-            if (selectRequest.Lines.NotNullOrEmpty())
+            if (_selectRequest.Lines.NotNullOrEmpty())
             {
-                _queryableData = FilterRowsByIndex(_queryableData, selectRequest.Lines);
+                _queryableData = FilterRowsByIndex(_queryableData, _selectRequest.Lines);
             }
 
             return _queryableData;
+        }
+
+        public IQueryable<TReturnModel> Apply<TDbModel, TReturnModel, TConditionMessage>(IQueryable<TDbModel> queryableData,
+            TConditionMessage conditionMessage)
+        {
+            var _converter = _serviceProvider.GetRequiredService<IModelConverter<TDbModel, TReturnModel>>();
+            return Apply(queryableData, conditionMessage,_converter.Expression);
+        }
+
+        public IQueryable<TReturnModel> Apply<TDbModel, TReturnModel, TConditionMessage>(IQueryable<TDbModel> queryableData,
+            TConditionMessage conditionMessage, Expression<Func<TDbModel, TReturnModel>> modelConvertExpression)
+        {
+            return Apply(queryableData.Select(modelConvertExpression), conditionMessage);
         }
 
         private IQueryable<TModel> FilterRowsByIndex<TModel>(IQueryable<TModel> queryableData,

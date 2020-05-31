@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace gRPC.Select.Test.TestTools
+namespace gRPC.Select.TestDB.TestTools
 {
     public class DBContextFactory: IDesignTimeDbContextFactory<DBContext>
     {

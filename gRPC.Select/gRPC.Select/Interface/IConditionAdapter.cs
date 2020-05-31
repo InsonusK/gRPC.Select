@@ -1,7 +1,6 @@
-using Google.Protobuf;
 using GRPC.Selector;
 
-namespace gRPC.Select.Adapter
+namespace gRPC.Select.Interface
 {
     /// <summary>
     /// Adapter to project message

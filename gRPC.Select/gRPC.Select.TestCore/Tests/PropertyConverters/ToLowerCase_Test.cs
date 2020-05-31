@@ -44,7 +44,7 @@ namespace gRPC.Select.Test.Tests.PropertyConverters
         public void ConvertProperty()
         {
             // Array
-            var _testClass = new TestClass() {Value = "AOEuI"};
+            var _testClass = new TestClass {Value = "AOEuI"};
             var _parameter = Expression.Parameter(typeof(TestClass), "x");
 
             var _property = Expression.Property(_parameter, nameof(_testClass.Value));

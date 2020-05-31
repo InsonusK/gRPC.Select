@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging.Abstractions;
 using Npgsql;
 
-namespace gRPC.Select.Test.TestTools
+namespace gRPC.Select.TestDB.TestTools
 {
     public class DBInit
     {
@@ -41,7 +38,7 @@ namespace gRPC.Select.Test.TestTools
             {
                 _context.Database.EnsureDeleted();
             }
-            catch (Exception e)
+            catch (Exception _e)
             {
                 // ignored
             }
@@ -61,21 +58,15 @@ namespace gRPC.Select.Test.TestTools
         private void AddValues()
         {
             using DBContext _context = new DBContext(DbContextOptions);
-            _context.Table.Add(new DataModel()
-                {StringValue = "1", DoubleValue = 1.1, FloatValue = (float) 1.2, BoolValue = false});
-            _context.Table.Add(new DataModel()
-                {StringValue = "2", DoubleValue = 2.1, FloatValue = (float) 2.2, BoolValue = true});
-            _context.Table.Add(new DataModel()
-                {StringValue = "3", DoubleValue = 3.1, FloatValue = (float) 3.2, BoolValue = false});
-            _context.Table.Add(new DataModel()
-                {StringValue = "4", DoubleValue = 4.1, FloatValue = (float) 4.2, BoolValue = true});
-            _context.Table.Add(new DataModel()
-                {StringValue = "aOeUi", DoubleValue = 5.1, FloatValue = (float) 5.2, BoolValue = false});
+            _context.Table.Add(new DataModel {StringValue = "1", DoubleValue = 1.1, FloatValue = (float) 1.2, BoolValue = false});
+            _context.Table.Add(new DataModel {StringValue = "2", DoubleValue = 2.1, FloatValue = (float) 2.2, BoolValue = true});
+            _context.Table.Add(new DataModel {StringValue = "3", DoubleValue = 3.1, FloatValue = (float) 3.2, BoolValue = false});
+            _context.Table.Add(new DataModel {StringValue = "4", DoubleValue = 4.1, FloatValue = (float) 4.2, BoolValue = true});
+            _context.Table.Add(new DataModel {StringValue = "aOeUi", DoubleValue = 5.1, FloatValue = (float) 5.2, BoolValue = false});
 
-            for (int i = 0; i < 10; i++)
+            for (int _i = 0; _i < 10; _i++)
             {
-                _context.Table.Add(new DataModel()
-                    {StringValue = "many", DoubleValue = 11 + i, FloatValue = (float) 10.1 + i, BoolValue = false});
+                _context.Table.Add(new DataModel {StringValue = "many", DoubleValue = 11 + _i, FloatValue = (float) 10.1 + _i, BoolValue = false});
             }
 
             _context.SaveChanges();
