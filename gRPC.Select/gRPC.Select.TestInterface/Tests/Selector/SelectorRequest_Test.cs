@@ -38,11 +38,10 @@ namespace gRPC.Select.TestInterface.Tests.Selector
             var _expectedResult = _context.Table.ToArray();
 
             // Act
-            var _exception = Assert.Catch<ConditionException>(() =>
-                _selector.Apply(_context.Table.AsQueryable(), _selectRequest).ToArray());
 
             // Assert
-            Assert.AreEqual("An expected type of condition message", _exception.Message);
+            Assert.Catch<InvalidOperationException>(() =>
+                _selector.Apply(_context.Table.AsQueryable(), _selectRequest).ToArray());
         }
     }
 }

@@ -82,8 +82,14 @@ namespace gRPC.Select
         public IQueryable<TReturnModel> Apply<TDbModel, TReturnModel, TConditionMessage>(IQueryable<TDbModel> queryableData,
             TConditionMessage conditionMessage)
         {
-            var converter = _serviceProvider.GetRequiredService<IModelConverter<TDbModel, TReturnModel>>();
-            return Apply(queryableData.Select(converter.Expression), conditionMessage);
+            var _converter = _serviceProvider.GetRequiredService<IModelConverter<TDbModel, TReturnModel>>();
+            return Apply(queryableData, conditionMessage,_converter.Expression);
+        }
+
+        public IQueryable<TReturnModel> Apply<TDbModel, TReturnModel, TConditionMessage>(IQueryable<TDbModel> queryableData,
+            TConditionMessage conditionMessage, Expression<Func<TDbModel, TReturnModel>> modelConvertExpression)
+        {
+            return Apply(queryableData.Select(modelConvertExpression), conditionMessage);
         }
 
         private IQueryable<TModel> FilterRowsByIndex<TModel>(IQueryable<TModel> queryableData,
