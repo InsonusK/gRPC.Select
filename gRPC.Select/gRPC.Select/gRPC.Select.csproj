@@ -11,7 +11,7 @@
         <PackageLicenseUrl>Apache License 2.0</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/InsonusK/gRPC.Select</RepositoryUrl>
         <PackageTags>gRPC, Query, OData</PackageTags>
-        <PackageVersion>1.2.3</PackageVersion>
+        <PackageVersion>1.2.4</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
