@@ -1,13 +1,15 @@
-﻿using gRPC.Select;
+﻿using Example;
+using gRPC.Select;
 using gRPC.Select.Adapter;
 using gRPC.Select.Interface;
 using gRPC.Select.TestDB.TestTools;
-using GrpcService.Example.Services;
+using GrpcService.Example.Converters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SelectService = GrpcService.Example.Services.SelectService;
 
 namespace GrpcService.Example
 {
@@ -21,6 +23,7 @@ namespace GrpcService.Example
             services.AddSingleton<IConditionAdapter<global::Example.OtherStr.Select>>();
             services.AddSingleton<IConditionAdapter<global::Example.Str.SelectRequest>>();
             services.AddSingleton<ISelector>((provider => new Selector(provider)));
+            services.AddSingleton<IModelConverter<DataModel, SomeData>>(new DataModel_SomeData());
             services.AddDbContext<DBContext>();
         }
 

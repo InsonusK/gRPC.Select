@@ -56,13 +56,7 @@ namespace gRPC.Select
         public IQueryable<TModel> Apply<TModel, TConditionMessage>(IQueryable<TModel> queryableData,
             TConditionMessage conditionMessage)
         {
-            var _conditionAdapter = _serviceProvider.GetService<IConditionAdapter<TConditionMessage>>();
-            if (_conditionAdapter == null)
-            {
-                throw new ConditionException($"An expected type of condition message",
-                    new ArgumentOutOfRangeException(
-                        $"Type {typeof(IConditionAdapter<TConditionMessage>)} does not registered in Service Provider"));
-            }
+            var _conditionAdapter = _serviceProvider.GetRequiredService<IConditionAdapter<TConditionMessage>>();
 
             SelectRequest _selectRequest = _conditionAdapter.Convert(conditionMessage);
 
@@ -83,6 +77,13 @@ namespace gRPC.Select
             }
 
             return _queryableData;
+        }
+
+        public IQueryable<TReturnModel> Apply<TDbModel, TReturnModel, TConditionMessage>(IQueryable<TDbModel> queryableData,
+            TConditionMessage conditionMessage)
+        {
+            var converter = _serviceProvider.GetRequiredService<IModelConverter<TDbModel, TReturnModel>>();
+            return Apply(queryableData.Select(converter.Expression), conditionMessage);
         }
 
         private IQueryable<TModel> FilterRowsByIndex<TModel>(IQueryable<TModel> queryableData,

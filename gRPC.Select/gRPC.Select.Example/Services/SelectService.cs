@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Example;
@@ -35,6 +36,17 @@ namespace GrpcService.Example.Services
             return _resp;
         }
 
+        public override async Task<Response> SelectOneShort(Select request, ServerCallContext context)
+        {
+            var _resp = new Response();
+            SomeData[] _tab =
+                await _selector
+                    .Apply<DataModel, SomeData, Select>(_context.Table, request)
+                    .ToArrayAsync();
+            _resp.Tab.AddRange(_tab);
+            return _resp;
+        }
+
         public override async Task<Response> SelectTwo(SelectRequest request, ServerCallContext context)
         {
             var _resp = new Response();
@@ -44,6 +56,17 @@ namespace GrpcService.Example.Services
                         .Select(model => new SomeData {Id = model.Id, Value = model.StringValue}),
                     request)
                 .ToArrayAsync();
+            _resp.Tab.AddRange(_tab);
+            return _resp;
+        }
+
+        public override async Task<Response> SelectTwoShort(SelectRequest request, ServerCallContext context)
+        {
+            var _resp = new Response();
+            SomeData[] _tab =
+                await _selector
+                    .Apply<DataModel, SomeData, SelectRequest>(_context.Table, request)
+                    .ToArrayAsync();
             _resp.Tab.AddRange(_tab);
             return _resp;
         }

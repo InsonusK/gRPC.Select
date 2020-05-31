@@ -16,5 +16,7 @@ message SomeData {
 
 service SelectService {
     rpc SelectOne(OtherStr.Select) returns (Response);
+    rpc SelectOneShort(OtherStr.Select) returns (Response);
     rpc SelectTwo(Str.SelectRequest) returns (Response);
+    rpc SelectTwoShort(Str.SelectRequest) returns (Response);
 }
